@@ -1,9 +1,10 @@
 # Copyright (C) 2014 Peter Teichman
 
-import irc.bot
-from jaraco.stream import buffer
 import logging
 import re
+
+import irc.bot
+from jaraco.stream import buffer
 
 log = logging.getLogger("cobe.bot")
 
@@ -40,6 +41,7 @@ class Bot(irc.bot.SingleServerIRCBot):
         user = irc.client.NickMask(event.source).nick
 
         if event.target == self.log_channel:
+            self.brain.learn(text)
             # ignore input in the log channel
             return
 
@@ -72,7 +74,7 @@ class Bot(irc.bot.SingleServerIRCBot):
             text = msg
 
         if not self.only_nicks or user in self.only_nicks:
-            self.brain.learn(text)
+            ...
 
         if to == conn.nickname:
             reply = self.brain.reply(text)
