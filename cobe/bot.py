@@ -41,7 +41,7 @@ class Bot(irc.bot.SingleServerIRCBot):
         user = irc.client.NickMask(event.source).nick
 
         if event.target == self.log_channel:
-            self.brain.learn(text)
+            self.brain.learn(event.arguments[0].strip())
             # ignore input in the log channel
             return
 
