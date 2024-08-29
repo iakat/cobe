@@ -77,7 +77,8 @@ class Bot(irc.bot.SingleServerIRCBot):
             ...
 
         if to == conn.nickname:
-            conn.privmsg(event.target, self.brain.reply(text))
+            thinking_ms = min(3000, max(1000, len(text) * 60))
+            conn.privmsg(event.target, self.brain.reply(text, loop_ms=thinking_ms))
 
 
 class Runner:
